@@ -1,3 +1,9 @@
+# dmjp:
+
+1. Customize themes/zero-black-matrix.less.
+2. Run grunt in less/.
+3. Add customization to chrome using [this](http://superuser.com/a/247654).
+
 # Notice
 Experiments settings reset in `44.0.2403.89`. Open developer tools settings &#9654; Experiments &#9654; [&#10004;] Allow custom UI themes to enable theme again.
 
@@ -41,14 +47,3 @@ All template files are located in the `/less` directory. Files beginning with an
 
 Copy `/themes/_theme-template.less` and modify color values accordingly. Rename the file and save in the `/themes` directory. Specify the theme of your choice in `config.less`.
 
-# About Canary
-
-As of Version v. **33.0.1726.0**, themes only work via extensions and the developer tools experiments.
-
-There is a [thread detailing how this method came about.](https://code.google.com/p/chromium/issues/detail?can=4&start=0&num=100&q=&colspec=ID%20Pri%20M%20Iteration%20ReleaseBlock%20Cr%20Status%20Owner%20Summary%20OS%20Modified&groupby=&sort=&id=318566).  Feel free to voice your opinions there.
-
-***
-
-## Additional Resources
-
-Blog post and screencast showing how to get up and running and create your own theme as well http://s10wen.com/blog/2014/03/12/chrome-dev-tools-theming-with-zero-base-themes/
