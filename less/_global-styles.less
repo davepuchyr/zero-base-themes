@@ -28,6 +28,11 @@
 	z-index: 0;
 }
 
+::shadow ::selection,
+::selection {
+	background: lighten(@global-selected, 45%)
+}
+
 //Panel text
 .panel-enabler-view {
 	color: @global-text;
@@ -96,8 +101,9 @@ body.dock-to-right:not(.undocked):not(.overlay-contents) {
 
 // Editing Dom Nodes or Snippet Filenames
 ::shadow ::shadow style + .text-prompt-editing,
-::shadow style + .text-prompt-editing ,
+::shadow .text-prompt-editing ,
 .editing {
+	box-shadow: none !important;
 	background-color: @global-background !important;
 	outline: 1px solid @eh-editing-outline !important;
 	color: @global-text !important;
@@ -105,7 +111,10 @@ body.dock-to-right:not(.undocked):not(.overlay-contents) {
 
 ::shadow .text-prompt-editing > ::content * {
 	color: @global-text !important;
+}
 
+::shadow .elements-tree-editor {
+	box-shadow: none !important;
 }
 
 // Editing Scope values
@@ -122,59 +131,97 @@ body.dock-to-right:not(.undocked):not(.overlay-contents) {
 	}
 }
 
-// Tables
-// Only found in audits for now
-::shadow .tree-outline li {
-	color: @global-text !important;
-	background-color: @table-primary !important;
+// Tree Directories
+.panel-sidebar {
+	background-color: @global-background !important;
+}
 
-	&.odd-row + .children li,
-	&.odd-row {
-		background-color: @table-secondary !important;
+::shadow {
+	.tree-outline li {
+		color: @global-text !important;
+		background-color: @table-primary !important;
+
+		&.odd-row + .children li,
+		&.odd-row {
+			background-color: @table-secondary !important;
+		}
+
+		&:hover:not(.selected) .selection {
+			.highlight(hover);
+		}
+
+		&.selected .selection {
+			.highlight(selection);
+		}
 	}
 
-	&.hovered:not(.selected) .selection {
-		.highlight(hover);
-	}
-
-	&.selected .selection {
-		.highlight(selection);
+	li.audits-sidebar-results {
+		text-shadow: none !important;
 	}
 }
 
-// Context Menu (New settings button and material menus)
-.soft-context-menu {
+// Don't highlight Request Header Tree
+.request-headers-tree::shadow .tree-outline li.selected .selection {
+	background-color: transparent !important;
+	box-shadow: none !important;
+}
+
+
+::shadow .soft-context-menu {
 	background: @popover-background !important;
 	border: 1px solid @- !important; .contrast(@popover-background, 5%);
 	color: @global-text !important;
+	box-shadow: 0 5px 10px fade(#000, 40%) !important;
 
-	&::shadow {
-		.soft-context-menu-item-mouse-over {
-			& { background-color: @- !important; .contrast(@popover-background, 8%); }
-			& { border-top: 1px solid @- !important; .contrast(@popover-background, 10%); }
-			& { border-bottom: 1px solid @- !important; .contrast(@popover-background, 10%); }
-			background-image: none !important;
+
+	.soft-context-menu-item-mouse-over {
+		& { background-color: @- !important; .contrast(@popover-background, 8%); }
+		& { border-top: 1px solid @- !important; .contrast(@popover-background, 10%); }
+		& { border-bottom: 1px solid @- !important; .contrast(@popover-background, 10%); }
+		background-image: none !important;
+		color: @global-text !important;
+	}
+
+	.soft-context-menu-separator > .separator-line {
+		border-bottom: 1px solid @- !important; .contrast(@popover-background, 5%);
+	}
+
+	// Dock options (remove blue hover)
+	.toolbar::shadow .toolbar-shadow.blue-on-hover .toolbar-item:not(.toggled-on).hover:enabled {
+		background-color: @global-hover !important;
+
+		.glyph {
+			color: @global-text !important;
+		}
+	}
+}
+
+// Console context dropdown
+::shadow .console-context {
+	background-color: transparent !important;
+
+	&.warning::shadow .title {
+		color: @global-warn !important;
+	}
+}
+
+::shadow .widget::shadow .context-list {
+	background: @popover-background !important;
+	border: 1px solid @- !important; .contrast(@popover-background, 5%);
+	color: @global-text !important;
+	box-shadow: 0 5px 10px fade(#000, 40%) !important;
+
+	.context.selected {
+		& { background-color: @- !important; .contrast(@popover-background, 8%); }
+		& { border-top: 1px solid @- !important; .contrast(@popover-background, 10%); }
+		& { border-bottom: 1px solid @- !important; .contrast(@popover-background, 10%); }
+
+		.title {
+			color: @global-text !important;
 		}
 
-		.soft-context-menu-separator > .separator-line {
-			border-bottom: 1px solid @- !important; .contrast(@popover-background, 5%);
-		}
-
-		.checkmark {
-			-webkit-mask-image: url(chrome-devtools://devtools/bundled/Images/toolbarButtonGlyphs.png);
-			-webkit-mask-position: -128px -109px;
-			-webkit-mask-size: 352px 168px;
-			background-color: @global-accent !important;
-			background-image: none !important;
-		}
-
-		// Dock options (remove blue hover)
-		.toolbar::shadow .toolbar-shadow.blue-on-hover .toolbar-item:not(.toggled-on).hover:enabled {
-			background-color: @global-hover !important;
-
-			.glyph {
-				color: @global-text !important;
-			}
+		.subtitle {
+			color: @global-label !important;
 		}
 	}
 }
@@ -200,6 +247,7 @@ body.dock-to-right:not(.undocked):not(.overlay-contents) {
 	}
 }
 
+::shadow ::shadow,
 ::shadow ::shadow ::shadow {
 	.text-button,
 	[is="text-button"] {
@@ -207,6 +255,100 @@ body.dock-to-right:not(.undocked):not(.overlay-contents) {
 	}
 }
 
-::shadow ol.children.shadow-root.shadow-root-depth-3.expanded {
-	border-left: 1px dashed @- !important; .contrast(@global-background, 5%);
+::shadow ol.children.shadow-root.expanded {
+	border-left: 1px dashed @- !important; .contrast(@global-background, 10%);
+}
+
+// ==========================================================================
+// Forms
+// ==========================================================================
+body/deep/ input.toolbar-item {
+	.input-styles()
+}
+
+label[is="dt-radio"]::shadow ::content .dt-radio-button:checked {
+		border: 0 !important;
+		background: url("Images/radioDot.png") center center no-repeat @global-accent !important;
+}
+
+// ==========================================================================
+// 3rd Party Extension
+// ==========================================================================
+
+// React - paint bg white
+.widget[class*="React"] {
+	background: #fff !important;
+}
+
+// Remove text shadow from menus
+::shadow .tree-outline {
+	li.security-sidebar-origins,
+	li.profiles-tree-section {
+		text-shadow: none !important;
+	}
+}
+
+
+// ==========================================================================
+// Glyphs
+// ==========================================================================
+
+// Large Icons
+::shadow .spritesheet-largeicons:not(.icon-mask) {
+	&.smallicon-file,
+	&.smallicon-file-sync {
+		.glyphs("Images/toolbarButtonGlyphs");
+		-webkit-mask-size: 352px 168px;
+		background: @global-accent !important;
+	}
+}
+
+// persistence file indicator
+::shadow .spritesheet-largeicons:not(.icon-mask) {
+	&.smallicon-file,
+	&.smallicon-file-sync {
+		position: relative;
+		top: 2px;
+		background: @tab-label !important;
+	}
+}
+
+::shadow .selected .spritesheet-largeicons:not(.icon-mask) {
+	&.smallicon-file,
+	&.smallicon-file-sync {
+		background: @tab-label-selected !important;
+	}
+}
+
+// Small Icons
+// call stack indicator | thread position indicator | inline breakpoint
+.spritesheet-smallicons:not(.icon-mask),
+::shadow .spritesheet-smallicons:not(.icon-mask) {
+	&.smallicon-thick-right-arrow,
+	&.smallicon-inline-breakpoint-conditional {
+		.glyphs("Images/smallIcons");
+		background: @global-accent !important;
+	}
+
+	&.smallicon-checkmark {
+		.glyphs("Images/smallIcons");
+		background: @global-accent !important;
+		-webkit-mask-position: -20px 90px !important;
+	}
+}
+
+.cm-inline-breakpoint {
+	-webkit-mask-position: -60px 90px !important;
+}
+
+// override for disabled inline breakpoints
+.cm-execution-line-tail + .CodeMirror-widget {
+	background-color: transparent !important;
+}
+
+::shadow {
+	.selected-call-frame-icon,
+	.selected-thread-icon {
+		-webkit-mask-position: -80px 50px !important;
+	}
 }

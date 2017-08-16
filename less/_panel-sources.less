@@ -1,7 +1,7 @@
+// ==========================================================================
+// Sources
+// ==========================================================================
 
-/**********************************************
-/* Sources Tab
-/**********************************************/
 /*placeholder text when no file is open*/
 ::shadow .tabbed-pane-placeholder {
 	text-shadow: 0 1px 0 @global-textshadow !important;
@@ -24,24 +24,11 @@
 	border-bottom: 1px solid @global-background !important;
 }
 
-.sidebar-pane {
-
-	/* Breakpoints/Dom Breakpoints */
+// Breakpoints
+::shadow {
 	.breakpoints-list-deactivated {
 		background-color: @- !important; .contrast(@global-background, 5%) !important;
 		opacity: 0.3 !important
-	}
-
-	.breakpoint-list li {
-		color: @global-text !important;
-		& { border-top: 1px solid @- !important; .contrast(@global-background, 7%) !important };
-		& { border-bottom: 1px solid @- !important; .contrast(@global-background, 7%, invert) !important };
-
-		&:not(.breakpoint-hit):hover {
-			background-color: @global-hover !important;
-			& { border-top: 1px solid @- !important; .contrast(@global-background, 7%) !important };
-			& { border-bottom: 1px solid @- !important; .contrast(@global-background, 7%, invert) !important };
-		}
 	}
 
 	.breakpoint-hit {
@@ -49,6 +36,48 @@
 		border-top: 1px solid @selection-border !important;
 		border-bottom: 1px solid @selection-border !important;
 	}
+
+	.breakpoint-entry {
+		color: @global-text !important;
+
+		&:not(.breakpoint-hit) {
+			border-top: 1px solid @global-divider !important;
+
+			&:hover {
+				background-color: @global-hover !important;
+				border-top: 1px solid @global-divider !important;
+			}
+		}
+
+		.source-text {
+			color: @global-accent !important;
+		}
+	}
+}
+
+.breakpoint-list li,
+::shadow .list-item:not(.label) {
+	color: @global-text !important;
+	border-top: 1px solid @global-divider !important;
+
+	&:not(.breakpoint-hit):hover {
+		background-color: @global-hover !important;
+		border-top: 1px solid @global-divider !important;
+	}
+
+	.source-text {
+		color: @global-accent !important;
+	}
+}
+
+.breakpoint-hit {
+	background: @selection-background !important;
+	border-top: 1px solid @selection-border !important;
+	border-bottom: 1px solid @selection-border !important;
+}
+
+.sidebar-pane {
+	color: @global-text;
 
 	/* Call Stack */
 	::shadow .list-item {
@@ -74,27 +103,74 @@
 			}
 		}
 	}
+}
 
-	// 'paused on a js breakpoint' callstack node
-	.callstack-info.status {
-		border-top: none !important;
-		background-color: @- !important; .contrast(@global-background, 10%);
-		color: @global-warn;
+::shadow .call-frame-item {
+	background-color: @global-background !important;
 
-		.node-link {
-			color: @global-accent;
+	&:not(.async-header) {
+		border-top: 1px solid @global-divider !important;
+	}
+
+	&.async-header .call-frame-item-title {
+		background: @global-background !important;
+
+		.call-frame-title-text {
+			color: @global-warn !important;
+			font-weight: normal !important;
 		}
 
 	}
+
+	.call-frame-item-title {
+		color: @global-text !important;
+	}
+
+	.call-frame-location {
+		color: @global-label !important;
+		background-color: @global-background !important;
+	}
+
+	&.selected {
+		.highlight(selection);
+
+		.call-frame-location {
+			background-color: @global-selected !important;
+			color: @global-text !important;
+		}
+	}
 }
 
-.breakpoints-deactivated .breakpoint-list {
-	background-color: rgba(0,0,0,0) !important;
-	opacity: .3 !important;
+// Paused Breakpoint
+::shadow {
+	.paused-status {
+		background-color: @toolbar-main !important;
+		color: @global-text !important;
+		border-top: 4px solid @global-divider !important;
+		border-bottom: 4px solid @global-divider !important;
+
+		.status-main {
+			color: @global-warn !important;
+		}
+
+		&.error-reason {
+			color: @global-error !important;
+
+			.status-main {
+				color: @global-error !important;
+			}
+		}
+	}
+}
+
+// Blackbox Indicator
+::shadow .blackboxed-message {
+	background-color: @toolbar-main !important;
+	color: @global-text !important;
 }
 
 // Sidebar Pane Headers
-.sidebar-pane-title {
+::shadow .expandable-view-title {
 	color: @global-text !important;
 	background: @toolbar-main !important;
 	& { border-top: 1px solid @- !important; .contrast(@toolbar-main, 5%); }
@@ -103,10 +179,6 @@
 	&.expanded,
 	&:last-child {
 		border-bottom: 1px solid @toolbar-main !important;
-	}
-
-	&:first-child {
-		border-top: 1px solid red !important;
 	}
 }
 
@@ -123,25 +195,7 @@ li.breakpoint-hit .breakpoint-hit-marker {
 // Refresh Button (Watch Expressions Header)
 .pane-title-button.add,
 .sidebar-pane-toolbar > .pane-title-button.refresh {
-	/*background-image: none !important;*/
-	-webkit-background-position: -24px 0 !important;
 	background-color: @glyph-inactive !important;
-	-webkit-mask-repeat: no-repeat !important;
-}
-
-// Mask Backgrounds
-.pane-title-button.add {
-	-webkit-mask-image: url(Images/paneAddButtons.png) !important;
-}
-
-.sidebar-pane-toolbar > .pane-title-button.refresh {
-	-webkit-mask-image: url(Images/paneRefreshButtons.png) !important;
-}
-
-.panel.elements .sidebar-pane .sidebar-pane-toolbar > .pane-title-button.element-state,
-.panel.elements .sidebar-pane .sidebar-pane-toolbar > .pane-title-button.animations-controls,
-.panel.elements .sidebar-pane .sidebar-pane-toolbar > .pane-title-button.add {
-	background-image: none !important;
 }
 
 // Elements Panel Buttons
@@ -251,9 +305,6 @@ li.breakpoint-hit .breakpoint-hit-marker {
 
 .sidebar-pane-button-new-rule {
 	background-color: @- !important; .contrast(@global-background, 40%);
-	background-image: none;
-	-webkit-mask-image: url(Images/paneAddButtons.png) !important;
-	-webkit-mask-position: 0 0 !important;
 
 	&:hover {
 		-webkit-mask-position: -23px 0 !important;
@@ -308,28 +359,23 @@ li.breakpoint-hit .breakpoint-hit-marker {
 	.highlight(hover);
 }
 
-// Selected Text
-body .CodeMirror .CodeMirror-selectedtext:not(.CodeMirror-persist-highlight) {
-	color: @global-text !important;
-}
-
-
-
 // ==========================================================================
 // Sources Sidebar
 // ==========================================================================
 
+.navigator-toolbar {
+	border-bottom: 1px solid @global-divider !important;
+}
 
 // [panel-sources] Hidden stack frames notification (sidebar)
 .hidden-callframes-message {
-	background: @-; .contrast(@global-background, 5%) !important;
+	background-color: @- !important; .contrast(@global-background, 5%);
 	text-align: center;
 
 	.link {
 		color: @xml-link !important;
 	}
 }
-
 
 // Watch Panel
 .watch-expressions {
@@ -340,12 +386,18 @@ body .CodeMirror .CodeMirror-selectedtext:not(.CodeMirror-persist-highlight) {
 	}
 }
 
+.watch-expression-error {
+	color: @global-error !important;
+}
+
 // not available message
 .error-message {
 	color: @global-error !important;
 }
 
-//Event Listener Tree
+// ==========================================================================
+// Event Listener Tree
+// ==========================================================================
 .event-listener-tree {
 
 	> li {
@@ -361,6 +413,12 @@ body .CodeMirror .CodeMirror-selectedtext:not(.CodeMirror-persist-highlight) {
 .sidebar-pane-toolbar .pane-title-button {
 	background-color: @- !important; .contrast(@glyph-inactive, 50%);
 }
+
+::shadow .event-listener-button {
+	.button-styles()
+}
+
+::shadow .tree-outline-disclosure .name { color: @js-obj-name !important; }
 
 
 // ==========================================================================
@@ -383,5 +441,60 @@ body .CodeMirror .CodeMirror-selectedtext:not(.CodeMirror-persist-highlight) {
 
 	.infobar-toggle {
 		color: @global-link !important;
+	}
+}
+
+// horizontal view watch expression toolbar divider
+.view-container > .toolbar {
+	border-bottom : 1px solid @global-divider !important;
+}
+
+// ==========================================================================
+// Threads
+// ==========================================================================
+::shadow .thread-item {
+	color: @global-text !important;
+
+	&:hover {
+		.highlight(hover);
+	}
+
+	&.selected {
+		.highlight(selection);
+
+		&.hover {
+			.highlight(selection);
+		}
+	}
+
+	+ .thread-item {
+		border-top: 1px solid @global-divider !important;
+	}
+}
+
+// ==========================================================================
+// Persistence 2.0 Sources Tab Icons
+// ==========================================================================
+::shadow .spritesheet-mediumicons:not(.icon-mask) {
+	&.mediumicon-file-sync,
+  &.mediumicon-file {
+		.glyphs("Images/mediumIcons");
+		background: @tab-label !important;
+
+	}
+
+	&.mediumicon-file {
+		-webkit-mask-position: -0px 32px !important;
+		position: relative;
+	}
+
+	&.mediumicon-file-sync {
+		-webkit-mask-position: -48px 48px !important;
+	}
+}
+
+::shadow .selected .spritesheet-mediumicons:not(.icon-mask) {
+	&.mediumicon-file {
+		background: @tab-label-selected !important;
 	}
 }

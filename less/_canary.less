@@ -1,90 +1,33 @@
 // ==========================================================================
-// Sources
+// Sources Sidebar
 // ==========================================================================
 
-// Scope headers
-.scope-chain-sidebar-pane-section-title {
+// section headers - replace when stable
+::shadow .expandable-view-title {
+	&:extend(.sidebar-pane all);
+}
+
+// ==========================================================================
+// Sidebars
+// ==========================================================================
+
+// Darken side panel bg
+.panel-sidebar {
+	background-color: @global-background !important;
+}
+
+// ==========================================================================
+// Syntax
+// ==========================================================================
+#console-messages .link,
+#console-messages .devtools-link {
 	color: @global-text;
 }
 
-// ==========================================================================
-// Network
-// ========================================================================== */
-
-
-.network-blocked-urls {
-	border-top: none !important;
-
-	&::shadow {
-
-		// Header for blocked urls
-		.toolbar {
-			border-bottom: none !important;
-
-			&::shadow {
-
-				.toolbar-shadow {
-					background-image: linear-gradient(@tab-color-top,@tab-color-bottom) !important;
-				}
-
-				.toolbar-text {
-					color: @global-text !important;
-				}
-			}
-		}
-
-		.blocked-url {
-			color: @global-text !important;
-
-			&:hover {
-				.highlight(hover);
-			}
-		}
-	}
-}
-
-// ==========================================================================
-// File/Function Dialog
-// ==========================================================================
-::shadow .filtered-list-widget {
-	background: @dialog-background !important;
-	box-shadow: 0 5px 15px 5px rgba(0,0,0,.6) !important;
-	border: 1px solid @dialog-border !important;
-
-	.filtered-list-widget-prompt-element {
-		box-shadow: none !important;
-		color: @global-text !important;
-		background-color: @global-background !important;
-	}
-
-	> div.container {
-		background: @global-background !important;
-	}
-
-	.filtered-list-widget-item {
-		background-color: @dialog-item-background !important;
-		& { border-top: 1px solid @- !important; .contrast(@dialog-item-background, 5%) };
-		& { border-bottom: 1px solid @- !important; .contrast(@dialog-item-background, 10%) };
-
-		&.selected {
-			background-color: @selection-background !important;
-			color: @- !important; .contrast(@dialog-item-text, 10%);
-		}
-
-		&:not(.selected):hover {
-			background-color: @hover-background !important;
-		}
-
-		.highlight {
-			color: @global-accent !important;
-		}
-	}
-
-	.filtered-list-widget-title {
-		color: @dialog-item-text !important;
-	}
-
-	.filtered-list-widget-subtitle {
-		color: @- !important; .contrast(@dialog-item-text, 40%, invert);
-	}
+// Adding class for weird bug where files that are of size equals multiple
+// of content hash's block_size (4096 bytes) always fail content verification due to bug.
+// https://bugs.chromium.org/p/chromium/issues/detail?id=720597
+// Fix landed in m61
+.dummy-class-to-fix-weird-bug {
+	display: none;
 }
